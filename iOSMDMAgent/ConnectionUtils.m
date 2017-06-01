@@ -181,16 +181,65 @@
     }
 }
 
+- (BOOL)getAccessToken:(NSString *)username password:(NSString *)pwd {
+    
+    NSLog(@"getAccessToken: Obtaining a access token");
+    
+    NSString *endpoint = [URLUtils getRefreshTokenURL];
+    
+    NSURL *url = [NSURL URLWithString:endpoint];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:HTTP_REQUEST_TIME];
+    
+    //    KeychainItemWrapper* wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:TOKEN_KEYCHAIN accessGroup:nil];
+    //    NSString *storedRefreshToken = [wrapper objectForKey:(__bridge id)(kSecValueData)];
+    
+    NSString *scopes = @"perm:ios:enroll perm:ios:view-device perm:ios:applications perm:ios:enterprise-wipe";
+    NSString *payload=[NSString stringWithFormat:@"grant_type=password&username=%@&password=%@&scope=%@", username, pwd, scopes];
+    NSLog(@"Request payload: %@", payload);
+    
+    [request setHTTPMethod:POST];
+    [request setHTTPBody:[payload dataUsingEncoding:NSUTF8StringEncoding]];
+    [self setContentTypeFormEncoded:request];
+    [self addClientDeatils:request];
+    [self setAllowsAnyHTTPSCertificate:url];
+    
+    NSURLResponse * response = nil;
+    NSError * error = nil;
+    NSData * data = [NSURLConnection sendSynchronousRequest:request
+                                          returningResponse:&response
+                                                      error:&error];
+    
+    if (error == nil)
+    {
+        long code = [(NSHTTPURLResponse *)response statusCode];
+        NSLog(@"getAccessToken:Response recieved: %li", code);
+        if (code == HTTP_OK) {
+            NSError *jsonError;
+            NSString *returnedData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            NSData *objectData = [returnedData dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+                                                                 options:NSJSONReadingMutableContainers
+                                                                   error:&jsonError];
+            NSString *accessToken =(NSString*)[json objectForKey:@"access_token"];
+            NSString *refreshToken =(NSString*)[json objectForKey:@"refresh_token"];
+            [MDMUtils setAccessToken:accessToken];
+            [MDMUtils setRefreshToken:refreshToken];
+            return true;
+        }
+    }
+    NSLog(@"Error while getting access token.");
+    return false;
+}
+
 
 - (BOOL)getNewAccessToken {
     
-    NSLog(@"getNewAccessToken: Obtaining a new access token");
+    NSLog(@"getNewAccessToken: Obtaining a new access token through refresh token");
     
     NSString *endpoint = [URLUtils getRefreshTokenURL];
 
     NSURL *url = [NSURL URLWithString:endpoint];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:HTTP_REQUEST_TIME];
-    NSMutableDictionary *paramDictionary = [[NSMutableDictionary alloc] init];
     
     
 //    KeychainItemWrapper* wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:TOKEN_KEYCHAIN accessGroup:nil];
@@ -198,13 +247,6 @@
     
     NSString *storedRefreshToken = [MDMUtils getRefreshToken];
     
-    if(storedRefreshToken != nil){
-        [paramDictionary setObject:storedRefreshToken forKey:REFRESH_TOKEN];
-    }
-    
-    [paramDictionary setObject:GRANT_TYPE_VALUE forKey:GRANT_TYPE];
-    [paramDictionary setObject:@"PRODUCTION" forKey:@"scope"];
-
     NSString *payload=[@"grant_type=refresh_token&refresh_token=" stringByAppendingString:storedRefreshToken];
     [request setHTTPMethod:POST];
     [request setHTTPBody:[payload dataUsingEncoding:NSUTF8StringEncoding]];
@@ -242,6 +284,160 @@
     return false;
 }
 
+
+- (BOOL)setClientCredentials:(NSString *)username password:(NSString*)pwd {
+    
+    NSLog(@"Calling dynamic client endpoint: Obtaining client credentials");    
+    NSString *endpoint = [URLUtils getDynamicClientURL];
+    
+    NSURL *url = [NSURL URLWithString:endpoint];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:HTTP_REQUEST_TIME];
+    
+    NSMutableDictionary *paramDictionary = [[NSMutableDictionary alloc] init];
+    [paramDictionary setValue:[NSString stringWithFormat:@"%@%@", APPLICATION_NAME_PREFIX, [MDMUtils getDeviceUDID]] forKey:APPLICATION_NAME];
+    [paramDictionary setValue:false forKey:IS_ALLOWED_TO_TENANT_DOMAINS];
+    [paramDictionary setValue:false forKey:IS_MAPPING_EXISTING_APP];
+    [paramDictionary setObject:[NSArray arrayWithObjects:@"ios", nil] forKey:TAGS];
+    
+    [request setHTTPMethod:POST];
+    [request setHTTPBody:[[self dictionaryToJSON:paramDictionary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [self setContentType:request];
+    [self addEncodedUserName:request username:username password:pwd];
+    
+    NSURLResponse * response = nil;
+    NSError * error = nil;
+    NSData * data = [NSURLConnection sendSynchronousRequest:request
+                                          returningResponse:&response
+                                                      error:&error];
+    
+    if (error == nil)
+    {
+        long code = [(NSHTTPURLResponse *)response statusCode];
+        NSLog(@"getClientCredentials:Response recieved: %li", code);
+        
+        NSString *returnedData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        if (returnedData != nil) {
+            NSLog(@"getClientCredentials:Data recieved: %@", returnedData);
+        }
+        
+        if (code == HTTP_OK) {
+            NSError *jsonError;
+            NSData *objectData = [returnedData dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+                                                                 options:NSJSONReadingMutableContainers
+                                                                   error:&jsonError];
+            
+            NSString *clientId =(NSString*)[json objectForKey:CLIENT_ID];
+            NSString *clientSecret =(NSString*)[json objectForKey:CLIENT_SECRET];
+            
+            NSString *clientCredentials = [MDMUtils encodeToBase64:clientId val:clientSecret];
+            NSLog(@"Encoded client credentials: %@", clientCredentials);
+            
+            [MDMUtils setClientCredentials:clientCredentials];
+            return true;
+        }
+    }
+    return false;
+
+}
+
+
+- (NSMutableURLRequest *)getOrganizationRequest:(NSString *)username password:(NSString *)pwd {
+    
+    NSLog(@"Calling get organizations");
+    NSString *endpoint = [URLUtils getOrganizationURL];
+    
+    NSLog(@"get organization endpoint: %@", endpoint);
+    NSURL *url = [NSURL URLWithString:endpoint];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:HTTP_REQUEST_TIME];
+    
+    [request setHTTPMethod:GET];
+    [self setContentType:request];
+    [self addEncodedUserName:request username:username password:pwd];
+    [self setAllowsAnyHTTPSCertificate:url];
+    
+    return request;
+    
+//    NSURLResponse * response = nil;
+//    NSError * error = nil;
+//    NSData * data = [NSURLConnection sendSynchronousRequest:request
+//                                          returningResponse:&response
+//                                                      error:&error];
+//    
+//    if (error == nil) {
+//        long code = [(NSHTTPURLResponse *)response statusCode];
+//        NSLog(@"getOrganizations:Response recieved: %li", code);
+//        
+//        NSString *returnedData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//        if (returnedData != nil) {
+//            NSLog(@"getOrganizations:Data recieved: %@", returnedData);
+//        }
+//        
+//        if (code == HTTP_OK) {
+//            NSError *jsonError;
+//            NSData *objectData = [returnedData dataUsingEncoding:NSUTF8StringEncoding];
+//            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+//                                                                 options:NSJSONReadingMutableContainers
+//                                                                   error:&jsonError];
+//            
+//            NSDictionary *tenantObjects = [json objectForKey:@"getTenantDisplayNamesResponse"];
+//            NSArray *tenants = [tenantObjects objectForKey:@"return"];
+//            return tenants;
+//        }
+//    }
+//    return nil;
+    
+//    __block NSArray *tenants;
+//    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//        
+//        long code = [(NSHTTPURLResponse *)response statusCode];
+//        NSLog(@"getOrganizations:Response recieved: %li", code);
+//        
+//        NSString *returnedData = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//        if (returnedData != nil) {
+//            NSLog(@"getOrganizations:Data recieved: %@", returnedData);
+//        }
+//        
+//        if (code == HTTP_OK) {
+//            NSError *jsonError;
+//            NSData *objectData = [returnedData dataUsingEncoding:NSUTF8StringEncoding];
+//            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+//                                                                 options:NSJSONReadingMutableContainers
+//                                                                   error:&jsonError];
+//        
+//            NSDictionary *tenantObjects = [json objectForKey:@"getTenantDisplayNamesResponse"];
+//            tenants = [tenantObjects objectForKey:@"return"];
+//        }
+//        
+//    }];
+//    return tenants;
+    
+}
+
+
+- (BOOL)authenticateUser:(NSString *)username password:(NSString *)pwd tenantDomain:(NSString *)tDomain {
+    NSLog(@"Authenticating user");
+    NSString *fullyQualifiedName = [NSString stringWithFormat:@"%@@%@", username, tDomain];
+    NSLog(@"Fully qualified user: %@", fullyQualifiedName);
+    BOOL result = false;
+    result = [self setClientCredentials:fullyQualifiedName password:pwd];
+    if (result) {
+        result = [self getAccessToken:fullyQualifiedName password:pwd];
+    }
+    return result;
+}
+
+
+- (void)addEncodedUserName:(NSMutableURLRequest *)request username:(NSString *)uname password:(NSString *)pwd {
+    
+    NSString *base64EncodedUserName = [MDMUtils encodeToBase64:uname val:pwd];
+    NSLog(@"Encoded username and password: %@", base64EncodedUserName);
+    
+    NSString *headerValue = [AUTHORIZATION_BASIC stringByAppendingString:base64EncodedUserName];
+    [request setValue:headerValue forHTTPHeaderField:AUTHORIZATION];
+    
+}
+
 - (void)addClientDeatils:(NSMutableURLRequest *)request {
     
     NSString *storedClientDetails = [MDMUtils getClientCredentials];
@@ -251,6 +447,8 @@
         [request setValue:headerValue forHTTPHeaderField:AUTHORIZATION];
     }
 }
+
+
 
 - (void)setContentType:(NSMutableURLRequest *)request {
     [request setValue:APPLICATION_JSON forHTTPHeaderField:CONTENT_TYPE];
@@ -276,7 +474,5 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:nil];
     return [[NSString alloc] initWithBytes:[jsonData bytes] length:[jsonData length] encoding:NSUTF8StringEncoding];
 }
-
-
 
 @end

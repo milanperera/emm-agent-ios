@@ -38,7 +38,19 @@ extern NSString *const FORM_ENCODED;
 extern NSString *const OPERATION_URI;
 extern NSString *const OPERATION_ID_RESPOSNE;
 extern NSString *const STATUS;
+extern NSString *const DYNAMIC_CLIENT_URI;
+extern NSString *const APPLICATION_NAME;
+extern NSString *const IS_ALLOWED_TO_TENANT_DOMAINS;
+extern NSString *const TAGS;
+extern NSString *const IS_MAPPING_EXISTING_APP;
+extern NSString *const APPLICATION_NAME_PREFIX;
+extern NSString *const CLIENT_ID;
+extern NSString *const CLIENT_SECRET;
+extern NSString *const ORGANIZATION_URL;
+
+
 extern int OAUTH_FAIL_CODE;
+
 
 + (void)saveServerURL:(NSString *)serverURL;
 + (NSString *)getServerURL;
@@ -50,6 +62,7 @@ extern int OAUTH_FAIL_CODE;
 + (NSString *)getUnenrollURL;
 + (NSString *)getRefreshTokenURL;
 + (NSString *)getOperationURL;
-
++ (NSString *)getDynamicClientURL;
++ (NSString *)getOrganizationURL;
 
 @end

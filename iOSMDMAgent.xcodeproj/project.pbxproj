@@ -27,7 +27,12 @@
 		14BD72541A834E2200D43DE5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD72531A834E2200D43DE5 /* LoginViewController.m */; };
 		405C079E1ECB0936002AB6EE /* header.png in Resources */ = {isa = PBXBuildFile; fileRef = 405C079D1ECB0936002AB6EE /* header.png */; };
 		405C07A01ECB6520002AB6EE /* SplashMain.png in Resources */ = {isa = PBXBuildFile; fileRef = 405C079F1ECB6520002AB6EE /* SplashMain.png */; };
+		40C9AD371EDEC377008F73EC /* ServerCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C9AD361EDEC377008F73EC /* ServerCommunicator.m */; };
+		40C9AD3B1EDEDF7A008F73EC /* ServerCommunicationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 40C9AD3A1EDEDF7A008F73EC /* ServerCommunicationManager.m */; };
 		40F3E15A1ED2AE2B00F02FFD /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 40F3E1591ED2AE2B00F02FFD /* refresh.png */; };
+		40F3E1691ED7F1C700F02FFD /* OrganizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F3E1681ED7F1C700F02FFD /* OrganizationViewController.m */; };
+		40F3E16F1ED7F22B00F02FFD /* LicenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F3E16E1ED7F22B00F02FFD /* LicenseViewController.m */; };
+		40F3E1751ED7F54600F02FFD /* LogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F3E1741ED7F54600F02FFD /* LogViewController.m */; };
 		620031A71BFCB63B004559F6 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 620031A61BFCB63B004559F6 /* KeychainItemWrapper.m */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +80,19 @@
 		405C079D1ECB0936002AB6EE /* header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = header.png; path = ../../../../../../Downloads/header.png; sourceTree = "<group>"; };
 		405C079F1ECB6520002AB6EE /* SplashMain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SplashMain.png; path = ../../../../../../Downloads/SplashMain.png; sourceTree = "<group>"; };
 		40735CED1D9BC4CA00AAB802 /* iOSMDMAgent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSMDMAgent.entitlements; sourceTree = "<group>"; };
+		40C9AD311EDEC180008F73EC /* ServerCommunicatorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicatorDelegate.h; sourceTree = "<group>"; };
+		40C9AD351EDEC377008F73EC /* ServerCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicator.h; sourceTree = "<group>"; };
+		40C9AD361EDEC377008F73EC /* ServerCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunicator.m; sourceTree = "<group>"; };
+		40C9AD381EDEDEC8008F73EC /* ServerCommunicationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicationManagerDelegate.h; sourceTree = "<group>"; };
+		40C9AD391EDEDF7A008F73EC /* ServerCommunicationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicationManager.h; sourceTree = "<group>"; };
+		40C9AD3A1EDEDF7A008F73EC /* ServerCommunicationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunicationManager.m; sourceTree = "<group>"; };
 		40F3E1591ED2AE2B00F02FFD /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh.png; path = ../../../../../../Desktop/refresh.png; sourceTree = "<group>"; };
+		40F3E1671ED7F1C700F02FFD /* OrganizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrganizationViewController.h; sourceTree = "<group>"; };
+		40F3E1681ED7F1C700F02FFD /* OrganizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrganizationViewController.m; sourceTree = "<group>"; };
+		40F3E16D1ED7F22B00F02FFD /* LicenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LicenseViewController.h; sourceTree = "<group>"; };
+		40F3E16E1ED7F22B00F02FFD /* LicenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LicenseViewController.m; sourceTree = "<group>"; };
+		40F3E1731ED7F54600F02FFD /* LogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogViewController.h; sourceTree = "<group>"; };
+		40F3E1741ED7F54600F02FFD /* LogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogViewController.m; sourceTree = "<group>"; };
 		620031A51BFCB63B004559F6 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		620031A61BFCB63B004559F6 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +133,12 @@
 				14AE5F5A1AC034B0005144D3 /* ConnectionUtils.h */,
 				14AE5F5B1AC034B0005144D3 /* ConnectionUtils.m */,
 				1434B47B1C219BB800EEEBC4 /* SDKProtocol.h */,
+				40C9AD311EDEC180008F73EC /* ServerCommunicatorDelegate.h */,
+				40C9AD351EDEC377008F73EC /* ServerCommunicator.h */,
+				40C9AD361EDEC377008F73EC /* ServerCommunicator.m */,
+				40C9AD381EDEDEC8008F73EC /* ServerCommunicationManagerDelegate.h */,
+				40C9AD391EDEDF7A008F73EC /* ServerCommunicationManager.h */,
+				40C9AD3A1EDEDF7A008F73EC /* ServerCommunicationManager.m */,
 			);
 			name = SDK;
 			sourceTree = "<group>";
@@ -164,6 +187,12 @@
 				14AE5F641AC039FC005144D3 /* Libraries */,
 				14BD72511A83488D00D43DE5 /* Views */,
 				14BD722B1A83479800D43DE5 /* Supporting Files */,
+				40F3E1671ED7F1C700F02FFD /* OrganizationViewController.h */,
+				40F3E1681ED7F1C700F02FFD /* OrganizationViewController.m */,
+				40F3E16D1ED7F22B00F02FFD /* LicenseViewController.h */,
+				40F3E16E1ED7F22B00F02FFD /* LicenseViewController.m */,
+				40F3E1731ED7F54600F02FFD /* LogViewController.h */,
+				40F3E1741ED7F54600F02FFD /* LogViewController.m */,
 			);
 			path = iOSMDMAgent;
 			sourceTree = "<group>";
@@ -338,12 +367,17 @@
 				142143991A96021B006C34B6 /* MDMConstants.m in Sources */,
 				14AE5F611AC035C4005144D3 /* URLUtils.m in Sources */,
 				14AE5F5C1AC034B0005144D3 /* ConnectionUtils.m in Sources */,
+				40F3E1691ED7F1C700F02FFD /* OrganizationViewController.m in Sources */,
 				14BD72541A834E2200D43DE5 /* LoginViewController.m in Sources */,
 				142143961A9600BD006C34B6 /* MDMUtils.m in Sources */,
 				14BD72341A83479900D43DE5 /* ViewController.m in Sources */,
 				14BD72311A83479900D43DE5 /* AppDelegate.m in Sources */,
 				14BD722E1A83479900D43DE5 /* main.m in Sources */,
+				40C9AD3B1EDEDF7A008F73EC /* ServerCommunicationManager.m in Sources */,
 				620031A71BFCB63B004559F6 /* KeychainItemWrapper.m in Sources */,
+				40F3E16F1ED7F22B00F02FFD /* LicenseViewController.m in Sources */,
+				40C9AD371EDEC377008F73EC /* ServerCommunicator.m in Sources */,
+				40F3E1751ED7F54600F02FFD /* LogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

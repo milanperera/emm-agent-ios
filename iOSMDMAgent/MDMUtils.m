@@ -2,9 +2,6 @@
 //  MDMUtils.m
 //  iOSMDMAgent
 //
-//  Created by Dilshan Edirisuriya on 2/19/15.
-//  Copyright (c) 2015 WSO2. All rights reserved.
-//
 
 #import "MDMUtils.h"
 
@@ -36,6 +33,8 @@ NSString *const REFRESH_TOKEN = @"REFRESH_TOKEN";
 NSString *const CLIENT_CREDENTIAL = @"CLIENT_CREDENTIAL";
 NSString *const TENANT_DOMAIN = @"TENANT_DOMAIN";
 NSString *const LOCATION_UPDATED_TIME = @"LOCATION_UPDATED_TIME";
+NSString *const TENANT_DOMAIN_DNAME = @"tenantDisplayName";
+NSString *const TENANT_DOMAIN_KEY = @"tenantDomain";
 
 + (void)saveDeviceUDID:(NSString *)udid {
     NSLog(@"Saving device UUID: %@", udid);
@@ -174,6 +173,19 @@ NSString *const LOCATION_UPDATED_TIME = @"LOCATION_UPDATED_TIME";
 
     NSLog(@"Getting location updated time from seconds format");
     return [NSString stringWithFormat:@"%li second(s) ago", (long)distanceBetweenDates];
+}
+
++ (NSString *)encodeToBase64:(NSString*) value1 val:(NSString *)value2 {
+    NSData *nsdata = [[NSString stringWithFormat:@"%@:%@", value1, value2] dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64EncodedString = [nsdata base64EncodedStringWithOptions:0];
+    NSLog(@"Encoded string: %@", base64EncodedString);
+    return base64EncodedString;
+}
+
++ (void)savePreference:(NSString *) key value:(NSString *)val {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:val forKey:key];
+    [userDefaults synchronize];
 }
 
 @end

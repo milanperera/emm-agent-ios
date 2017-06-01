@@ -22,5 +22,9 @@
 	<string>443</string>
 	<key>SERVER_URL</key>
 	<string>https://gateway.api.cloudstaging.wso2.com</string>
+	<key>DYNAMIC_CLIENT_URI</key>
+	<string>api-application-registration/register</string>
+	<key>ORGANIZATION_URL</key>
+	<string>https://identity.cloudstaging.wso2.com/services/CloudUserManager</string>
 </dict>
 </plist>

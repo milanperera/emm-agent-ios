@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) LoginViewController *loginViewController;
+@property (strong, nonatomic) LoginViewController *orginizationViewController;
 @property (retain, nonatomic) ConnectionUtils *connectionUtils;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) AVAudioPlayer *theAudio;

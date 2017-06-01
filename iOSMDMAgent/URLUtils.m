@@ -41,6 +41,16 @@ NSString *const GRANT_TYPE_VALUE = @"refresh_token";
 NSString *const FORM_ENCODED = @"application/x-www-form-urlencoded";
 NSString *const OPERATION_ID_RESPOSNE = @"operationId";
 NSString *const STATUS = @"status";
+NSString *const DYNAMIC_CLIENT_URI = @"DYNAMIC_CLIENT_URL";
+NSString *const APPLICATION_NAME = @"applicationName";
+NSString *const IS_ALLOWED_TO_TENANT_DOMAINS = @"isAllowedToAllDomains";
+NSString *const TAGS = @"tags";
+NSString *const IS_MAPPING_EXISTING_APP = @"isMappingAnExistingOAuthApp";
+NSString *const APPLICATION_NAME_PREFIX = @"cdmf_ios_";
+NSString *const CLIENT_ID = @"client_id";
+NSString *const CLIENT_SECRET = @"client_secret";
+NSString *const ORGANIZATION_URL = @"ORGANIZATION_URL";
+
 
 
 + (NSDictionary *)readEndpoints {
@@ -92,6 +102,14 @@ NSString *const STATUS = @"status";
 
 + (NSString *)getRefreshTokenURL{
     return [NSString stringWithFormat:@"%@:%@%@", [URLUtils getServerURL], [URLUtils getAPIPort], [[URLUtils readEndpoints] objectForKey:REFRESH_TOKEN_URI]];
+}
+
++ (NSString *)getDynamicClientURL{
+    return [NSString stringWithFormat:@"%@:%@%@", [URLUtils getServerURL], [URLUtils getAPIPort], [[URLUtils readEndpoints] objectForKey:DYNAMIC_CLIENT_URI]];
+}
+
++ (NSString *)getOrganizationURL{
+    return [NSString stringWithFormat:@"%@", [[URLUtils readEndpoints] objectForKey:ORGANIZATION_URL]];
 }
 
 @end

@@ -27,6 +27,8 @@ extern NSString *const REFRESH_TOKEN;
 extern NSString *const CLIENT_CREDENTIALS;
 extern NSString *const TENANT_DOMAIN;
 extern NSString *const LOCATION_UPDATED_TIME;
+extern NSString *const TENANT_DOMAIN_DNAME;
+extern NSString *const TENANT_DOMAIN_KEY;
 
 + (void)saveDeviceUDID:(NSString *)udid;
 + (NSString *)getDeviceUDID;
@@ -44,5 +46,7 @@ extern NSString *const LOCATION_UPDATED_TIME;
 + (NSString *)getTenantDomain;
 + (void)setLocationUpdatedTime;
 + (NSString *)getLocationUpdatedTime;
++ (NSString *)encodeToBase64:(NSString*)value1 val:(NSString *)value2;
++ (void)savePreference:(NSString *) key value:(NSString *)val;
 
 @end
