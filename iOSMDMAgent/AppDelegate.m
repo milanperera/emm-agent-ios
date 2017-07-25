@@ -20,9 +20,12 @@
     _connectionUtils = [[ConnectionUtils alloc] init];
     _connectionUtils.delegate = self;
     self.locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    _locationManager.distanceFilter = LOCATION_DISTANCE_FILTER;
-    _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    
+    // Set a movement threshold for new events.
+    self.locationManager.distanceFilter = 10; // meters
     
     // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
@@ -191,11 +194,23 @@
 
 - (void)initLocation {
     NSLog(@"Initializing location manager");
-    __block UIBackgroundTaskIdentifier bgTask =0;
-    UIApplication  *application = [UIApplication sharedApplication];
-    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-        [self.locationManager startUpdatingLocation];
-    }];
+//    __block UIBackgroundTaskIdentifier bgTask =0;
+//    UIApplication  *application = [UIApplication sharedApplication];
+//    bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+//        [self.locationManager startUpdatingLocation];
+//    }];
+    
+    if (nil == self.locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+    }
+    
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    
+    // Set a movement threshold for new events.
+    self.locationManager.distanceFilter = 10; // meters
+    [self.locationManager startUpdatingLocation];
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
