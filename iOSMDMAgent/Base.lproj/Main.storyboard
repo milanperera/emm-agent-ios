@@ -23,8 +23,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header.png" translatesAutoresizingMaskIntoConstraints="NO" id="XQ0-tA-dIG">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="acme-header.png" translatesAutoresizingMaskIntoConstraints="NO" id="XQ0-tA-dIG">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="206.33333333333334"/>
+                                <color key="backgroundColor" red="0.81640511751174927" green="0.25287267565727234" blue="0.26845443248748779" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="XQ0-tA-dIG" secondAttribute="height" multiplier="221:110" id="vcY-7A-PVu"/>
                                 </constraints>
@@ -50,7 +51,7 @@
                             </label>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFj-yl-pwy">
                                 <rect key="frame" x="137" y="332.66666666666669" width="140" height="40"/>
-                                <color key="backgroundColor" red="0.95776337389999999" green="0.48279076809999999" blue="0.1256870031" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.8164051175" green="0.25287267569999999" blue="0.26845443250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="5yH-vc-TMn"/>
                                     <constraint firstAttribute="width" constant="140" id="SRL-PP-l1I"/>
@@ -118,15 +119,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header.png" translatesAutoresizingMaskIntoConstraints="NO" id="S8b-nk-aLT">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="acme-header.png" translatesAutoresizingMaskIntoConstraints="NO" id="S8b-nk-aLT">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="211.33333333333334"/>
+                                <color key="backgroundColor" red="0.8164051175" green="0.25287267569999999" blue="0.26845443250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="S8b-nk-aLT" secondAttribute="height" multiplier="96:49" id="YTY-np-ieu"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2Z-zP-a5q">
                                 <rect key="frame" x="137" y="375" width="140" height="40"/>
-                                <color key="backgroundColor" red="0.95776337385177612" green="0.48279076814651489" blue="0.12568700313568115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.8164051175" green="0.25287267569999999" blue="0.26845443250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="LQO-4E-jky"/>
                                     <constraint firstAttribute="height" constant="40" id="Li8-do-IaY"/>
@@ -193,7 +195,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="header.png" width="750" height="379"/>
+        <image name="acme-header.png" width="750" height="340"/>
         <image name="reload.png" width="250" height="250"/>
     </resources>
 </document>
